@@ -40,7 +40,7 @@ class Student:
         return (f"Имя: {self.name}\n"
         f"Фамилия: {self.surname}\n"
         f"Средняя оценка за домашние задания: {self.avg_grade()}\n"
-        f"Курсы в процессе изучения: {",".join(self.courses_in_progress)}\n"
+        f"Курсы в процессе изучения: {", ".join(self.courses_in_progress)}\n"
         f"Завершенные курсы: {",".join(self.finished_courses)}")
     
     def __eq__(self, student):
@@ -119,7 +119,7 @@ best_student = Student('Ruoy', 'Eman', 'your_gender')
 best_student.add_courses_in_progress('Python')
 best_student.add_finished_courses('Git')
 best_student.rate_lecture(lecturer_a, 'Python', 10)
-best_student.rate_lecture(lecturer_2, 'Python', 9)
+best_student.rate_lecture(lecturer_2, 'Python', 8)
 
 student_2 = Student('Roy', 'Jones', 'male')
 student_2.add_courses_in_progress('Python')
@@ -142,6 +142,9 @@ reviewer_2.rate_hw(student_2, 'Python', 9)
 reviewer_2.rate_hw(student_2, 'Python', 8)
 print(reviewer_2)
 
+print(lecturer_a)
+print(lecturer_2)
+
 if lecturer_a == lecturer_2:
     print(f'{lecturer_a.name} have the same grades as {lecturer_2.name}')
 elif lecturer_a < lecturer_2:
@@ -149,14 +152,40 @@ elif lecturer_a < lecturer_2:
 else:
     print(f'{lecturer_a.name} have the better grade than {lecturer_2.name}')
 
-print(lecturer_a)
+print(best_student)
+print(student_2)
 
-print(lecturer_2)
+if best_student == student_2:
+    print(f'{best_student.surname} have the same grades as {student_2.surname}')
+elif best_student < student_2:
+    print(f'{best_student.surname} have the less grade than {student_2.surname}')
+else:
+    print(f'{best_student.surname} have the better grade than {student_2.surname}')
 
-#print(best_student)
+student_list_a = [best_student, student_2]
 
-#print(student_2)
-#if any_lecturer == some_lecturer:
-    #print('any and some have the same grades')
-#else:
-#    print('any and some have the different grades')
+def avg_rate_hw(student_list, course_name):
+    total_rate = 0
+    for student in student_list:
+        for course in student.grades.keys():
+            if course != course_name:
+                return "Нет такого курса"
+            else:
+                total_rate += sum(student.grades[course])/len(student.grades[course])
+    print(round(total_rate/ len(student_list), 1))
+
+avg_rate_hw(student_list_a, 'Python')
+
+lecturer_list_a = [lecturer_a, lecturer_2]
+
+def avg_rate_lecture(lecturer_list, course_name):
+    total_rate = 0
+    for lecturer in lecturer_list:
+        for course in lecturer.grades.keys():
+            if course != course_name:
+                return "Нет такого курса"
+            else:
+                total_rate += sum(lecturer.grades[course])/len(lecturer.grades[course])
+    print(round(total_rate/ len(lecturer_list), 1))
+
+avg_rate_lecture(lecturer_list_a, 'Python')
